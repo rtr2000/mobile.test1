@@ -14,7 +14,7 @@
     <script src="kinetic.js"></script>
     <script defer>
     
-    alert("hola");
+
     
       function writeMessage(messageLayer, message,sender) {
         var context = messageLayer.getContext();
@@ -24,7 +24,7 @@
 	   if (sender == "circulo"){
         	context.fillText(message, 10, 25);
 	   }else{
-		   context.fillText(message, 50, 50);
+		   context.fillText(message, 10, 50);
 		   }
 	 }
       var stage = new Kinetic.Stage({
@@ -33,7 +33,8 @@
         height: 200
       });
       var shapesLayer = new Kinetic.Layer();
-      var messageLayer = new Kinetic.Layer();
+      var messageLayer1 = new Kinetic.Layer();
+	 var messageLayer2 = new Kinetic.Layer();
 
       var triangle = new Kinetic.RegularPolygon({
         x: 190,
@@ -49,7 +50,7 @@
         var touchPos = stage.getTouchPosition();
         var x = touchPos.x - 190;
         var y = touchPos.y - 40;
-        writeMessage(messageLayer, 'x: ' + x + ', y: ' + y,"triangulo");
+        writeMessage(messageLayer2, 'x: ' + x + ', y: ' + y,"triangulo");
       });
 
       shapesLayer.add(triangle);
@@ -64,10 +65,10 @@
       });
 
       circle.on('touchstart', function() {
-        writeMessage(messageLayer, 'Touchstart circle',"circulo");
+        writeMessage(messageLayer1, 'Touchstart circle',"circulo");
       });
       circle.on('touchend', function() {
-        writeMessage(messageLayer, 'Touchend circle',"circulo");
+        writeMessage(messageLayer1, 'Touchend circle',"circulo");
       });
 
       shapesLayer.add(circle);
