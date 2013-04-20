@@ -12,7 +12,10 @@
   <body onmousedown="return false;">
     <div id="container"></div>
     <script src="kinetic.js"></script>
-    <script defer="defer">
+    <script defer>
+    
+    alert("hola");
+    
       function writeMessage(messageLayer, message,sender) {
         var context = messageLayer.getContext();
         messageLayer.clear();
@@ -21,7 +24,7 @@
 	   if (sender == "circulo"){
         	context.fillText(message, 10, 25);
 	   }else{
-		   context.fillText(message, 30, 25);
+		   context.fillText(message, 50, 50);
 		   }
 	 }
       var stage = new Kinetic.Stage({
