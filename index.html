@@ -1,65 +1,77 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
   <head>
-    <title>Acceleration Example</title>
+    <meta name="viewport" content="width=device-width"/>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body onmousedown="return false;">
+    <div id="container"></div>
+    <script src="kinetic.js"></script>
+    <script defer="defer">
+      function writeMessage(messageLayer, message,sender) {
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = '18pt Calibri';
+        context.fillStyle = 'black';
+	   if (sender == "circulo"){
+        	context.fillText(message, 10, 25);
+	   }else{
+		   context.fillText(message, 30, 25);
+		   }
+	 }
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 578,
+        height: 200
+      });
+      var shapesLayer = new Kinetic.Layer();
+      var messageLayer = new Kinetic.Layer();
 
-    <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
-    <script type="text/javascript" charset="utf-8">
+      var triangle = new Kinetic.RegularPolygon({
+        x: 190,
+        y: 120,
+        sides: 3,
+        radius: 80,
+        fill: '#00D2FF',
+        stroke: 'black',
+        strokeWidth: 4
+      });
 
-    // The watch id references the current `watchAcceleration`
-    var watchID = null;
+      triangle.on('touchmove', function() {
+        var touchPos = stage.getTouchPosition();
+        var x = touchPos.x - 190;
+        var y = touchPos.y - 40;
+        writeMessage(messageLayer, 'x: ' + x + ', y: ' + y,"triangulo");
+      });
 
-    // Wait for Cordova to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
+      shapesLayer.add(triangle);
 
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-        startWatch();
-    }
+      var circle = new Kinetic.Circle({
+        x: 380,
+        y: stage.getHeight() / 2,
+        radius: 70,
+        fill: 'red',
+        stroke: 'black',
+        strokeWidth: 4
+      });
 
-    // Start watching the acceleration
-    //
-    function startWatch() {
+      circle.on('touchstart', function() {
+        writeMessage(messageLayer, 'Touchstart circle',"circulo");
+      });
+      circle.on('touchend', function() {
+        writeMessage(messageLayer, 'Touchend circle',"circulo");
+      });
 
-        // Update acceleration every 3 seconds
-        var options = { frequency: 100 };
+      shapesLayer.add(circle);
 
-        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
-    }
-
-    // Stop watching the acceleration
-    //
-    function stopWatch() {
-        if (watchID) {
-            navigator.accelerometer.clearWatch(watchID);
-            watchID = null;
-        }
-    }
-
-    // onSuccess: Get a snapshot of the current acceleration
-    //
-    function onSuccess(acceleration) {
-        var element = document.getElementById('accelerometer');
-        element.innerHTML = 'Acceleration X: ' + acceleration.x + '<br />' +
-                            'Acceleration Y: ' + acceleration.y + '<br />' +
-                            'Acceleration Z: ' + acceleration.z + '<br />' +
-                            'Timestamp: '      + acceleration.timestamp + '<br />';
-    }
-
-    // onError: Failed to get the acceleration
-    //
-    function onError() {
-        alert('onError!');
-    }
+      stage.add(shapesLayer);
+      stage.add(messageLayer);
 
     </script>
-  </head>
-  <body>
-    <div id="accelerometer">Waiting for accelerometer...</div>
   </body>
 </html>
-
-
-
