@@ -16,16 +16,23 @@
     
 
     
-      function writeMessage(messageLayer, message,sender) {
+      function writeMessage1(messageLayer, message) {
         var context = messageLayer.getContext();
         messageLayer.clear();
         context.font = '18pt Calibri';
         context.fillStyle = 'black';
-	   if (sender == "circulo"){
+
         	context.fillText(message, 10, 25);
-	   }else{
+
+	 }
+	 function writeMessage2(messageLayer, message) {
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = '18pt Calibri';
+        context.fillStyle = 'black';
+
 		   context.fillText(message, 10, 50);
-		   }
+		   
 	 }
       var stage = new Kinetic.Stage({
         container: 'container',
@@ -50,7 +57,7 @@
         var touchPos = stage.getTouchPosition();
         var x = touchPos.x - 190;
         var y = touchPos.y - 40;
-        writeMessage(messageLayer2, 'x: ' + x + ', y: ' + y,"triangulo");
+        writeMessage2(messageLayer2, 'x: ' + x + ', y: ' + y,"triangulo");
       });
 
       shapesLayer.add(triangle);
@@ -65,10 +72,10 @@
       });
 
       circle.on('touchstart', function() {
-        writeMessage(messageLayer1, 'Touchstart circle',"circulo");
+        writeMessage1(messageLayer1, 'Touchstart circle',"circulo");
       });
       circle.on('touchend', function() {
-        writeMessage(messageLayer1, 'Touchend circle',"circulo");
+        writeMessage1(messageLayer1, 'Touchend circle',"circulo");
       });
 
       shapesLayer.add(circle);
