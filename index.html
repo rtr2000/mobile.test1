@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width"/>
     <style>
       body {
         margin: 0px;
@@ -9,58 +8,37 @@
       }
     </style>
   </head>
-  <body onmousedown="return false;">
+  <body>
     <div id="container"></div>
-    <script src="kinetic.js"></script>
-    <script defer>
-    
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.4.1.min.js"></script>
+    <script defer="defer">
+      var lastDist = 0;
+      var startScale = 1;
 
-    
-      function writeMessage1(messageLayer, message) {
-        var context = messageLayer.getContext();
-        messageLayer.clear();
-        context.font = '18pt Calibri';
-        context.fillStyle = 'black';
-
-        	context.fillText(message, 10, 25);
-
-	 }
-	 function writeMessage2(messageLayer, message) {
-        var context = messageLayer.getContext();
-        messageLayer.clear();
-        context.font = '18pt Calibri';
-        context.fillStyle = 'black';
-
-		   context.fillText(message, 10, 50);
-		   
-	 }
+      function getDistance(p1, p2) {
+        return Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
+      }
       var stage = new Kinetic.Stage({
         container: 'container',
         width: 578,
-        height: 200
+        height: 200,
+        draggable: true,
+        x: 286,
+        y: 100,
+        offset: [289, 100]
       });
-      var shapesLayer = new Kinetic.Layer();
-      var messageLayer1 = new Kinetic.Layer();
-	 var messageLayer2 = new Kinetic.Layer();
+
+      var layer = new Kinetic.Layer();
 
       var triangle = new Kinetic.RegularPolygon({
         x: 190,
-        y: 120,
+        y: stage.getHeight() / 2,
         sides: 3,
         radius: 80,
-        fill: '#00D2FF',
+        fill: 'green',
         stroke: 'black',
         strokeWidth: 4
       });
-
-      triangle.on('touchmove', function() {
-        var touchPos = stage.getTouchPosition();
-        var x = touchPos.x - 190;
-        var y = touchPos.y - 40;
-        writeMessage2(messageLayer2, 'x: ' + x + ', y: ' + y,"triangulo");
-      });
-
-      shapesLayer.add(triangle);
 
       var circle = new Kinetic.Circle({
         x: 380,
@@ -71,18 +49,38 @@
         strokeWidth: 4
       });
 
-      circle.on('touchstart', function() {
-        writeMessage1(messageLayer1, 'Touchstart circle',"circulo");
-      });
-      circle.on('touchend', function() {
-        writeMessage1(messageLayer1, 'Touchend circle',"circulo");
-      });
+      stage.getContent().addEventListener('touchmove', function(evt) {
+        var touch1 = evt.touches[0];
+        var touch2 = evt.touches[1];
 
-      shapesLayer.add(circle);
+        if(touch1 && touch2) {
+          var dist = getDistance({
+            x: touch1.clientX,
+            y: touch1.clientY
+          }, {
+            x: touch2.clientX,
+            y: touch2.clientY
+          });
 
-      stage.add(shapesLayer);
-      stage.add(messageLayer1);
-	 stage.add(messageLayer2);
+          if(!lastDist) {
+            lastDist = dist;
+          }
+
+          var scale = stage.getScale().x * dist / lastDist;
+
+          stage.setScale(scale);
+          stage.draw();
+          lastDist = dist;
+        }
+      }, false);
+
+      stage.getContent().addEventListener('touchend', function() {
+        lastDist = 0;
+      }, false);
+
+      layer.add(triangle);
+      layer.add(circle);
+      stage.add(layer);
 
     </script>
   </body>
