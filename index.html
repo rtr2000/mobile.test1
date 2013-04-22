@@ -16,10 +16,20 @@
 $(function(){
 
 
-	$.post("include.php",function(data){
+
+	function muestra(boton){
+			}
+	
+	$(".boton_menu").click(function(){
 		
-		$("#contenido").html(data);
-	},"html")
+		var link_boton = $(this).attr("link");
+		
+		$.post(link_boton,function(data){
+			$("#contenido").html(data);
+				},"html")
+		
+		});
+
 
 })
 
@@ -29,7 +39,13 @@ $(function(){
 
 <body>
 
-<div id="contenido"></div>
+<div>
 
+<input class="boton_menu" name="acelerometro"  link="acelerometro.html"  type="button" id="boton1" value="acelerometro" />
+<input class="boton_menu" name="juego" link="juego.html" type="button" id="boton2" value="juego" />
+<input class="boton_menu" name="inicio" link="inicio.html"  type="button" id="boton3" value="inicio" />
+
+</div>
+<div id="contenido"></div>
 </body>
 </html>
