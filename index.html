@@ -13,32 +13,10 @@
     margin: 0 auto;
 }
  
-#cabeza {
-    background: #900;
-    height: 200px;
-}
- 
-#menu-contenedor {
-    height: 50px;
-}
- 
-ul#menu {
-    padding: 0;
-    height: 50px;
-    background: #dfd;
-}
- 
-ul#menu li {
-    display: inline-block;
-}
- 
-ul#menu li a {
-    padding: 0 10px;
-    display: block;
-    line-height: 50px;
-}
+
  
 #contenido {
+	margin-top:0px;
     height: 700px;
     background: green;
 }
@@ -50,6 +28,8 @@ ul#menu li a {
 }
 </style>
 <script type="text/javascript" src="jquery-mobile/jquery-1.9.1.min.js">
+</script>
+<script type="text/javascript" src="cordova-2.5.0.js">
 
 </script>
 
@@ -139,26 +119,7 @@ var _ = namespace('torotec.classBotonera');
 						 contenedor:"contenido"
 					 };
 					 
-					 
-		// Hay que recordar la importancia de comenzar
-		// a ejecutar javascript cuando termine de cargar
-		// la página para evitar inconscistencias.
-		$(document).ready(function() {
-		  var menu = $('#menu');
-		  var contenedor = $('#menu-contenedor');
-		  var menu_offset = menu.offset();
-		  // Cada vez que se haga scroll en la página
-		  // haremos un chequeo del estado del menú
-		  // y lo vamos a alternar entre 'fixed' y 'static'.
-		  $(window).on('scroll', function() {
-		    if($(window).scrollTop() > menu_offset.top) {
-			 menu.addClass('menu-fijo');
-		    } else {
-			 menu.removeClass('menu-fijo');
-		    }
-		  });
-		});
-	
+
 
 </script>
 
@@ -170,17 +131,13 @@ var _ = namespace('torotec.classBotonera');
 
 
 
-  <div id="page">
-  <!--
-    <div id="cabeza"></div>
-  -->
-    <div id="menu-contenedor">
-      <div id="menu">
+
+      <div id="menu" class="menu-fijo">
 
       </div>
-    </div>
+
     <div id="contenido"></div>
-  </div>
+
 <script>
 	botonera.creaBotonera();
 
