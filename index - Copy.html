@@ -4,51 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
 
-<style>
-/* Para evitar margenes y espacios */
-* { margin: 0; padding: 0; }
- 
-#page {
-    width: 900px;
-    margin: 0 auto;
-}
- 
-#cabeza {
-    background: #900;
-    height: 200px;
-}
- 
-#menu-contenedor {
-    height: 50px;
-}
- 
-ul#menu {
-    padding: 0;
-    height: 50px;
-    background: #dfd;
-}
- 
-ul#menu li {
-    display: inline-block;
-}
- 
-ul#menu li a {
-    padding: 0 10px;
-    display: block;
-    line-height: 50px;
-}
- 
-#contenido {
-    height: 700px;
-    background: green;
-}
- 
-.menu-fijo {
-    position: fixed;
-    top: 0;
-    width: 900px;
-}
-</style>
+
 <script type="text/javascript" src="jquery-mobile/jquery-1.9.1.min.js">
 
 </script>
@@ -135,29 +91,9 @@ var _ = namespace('torotec.classBotonera');
 	botonera.opciones = {
 						 links:["acelerometro.html","juego.html","inicio.html"],
 						 values:["acelerometro","juego","inicio"],
-						 ubicacion:"menu",
+						 ubicacion:"botonera1",
 						 contenedor:"contenido"
 					 };
-					 
-					 
-		// Hay que recordar la importancia de comenzar
-		// a ejecutar javascript cuando termine de cargar
-		// la página para evitar inconscistencias.
-		$(document).ready(function() {
-		  var menu = $('#menu');
-		  var contenedor = $('#menu-contenedor');
-		  var menu_offset = menu.offset();
-		  // Cada vez que se haga scroll en la página
-		  // haremos un chequeo del estado del menú
-		  // y lo vamos a alternar entre 'fixed' y 'static'.
-		  $(window).on('scroll', function() {
-		    if($(window).scrollTop() > menu_offset.top) {
-			 menu.addClass('menu-fijo');
-		    } else {
-			 menu.removeClass('menu-fijo');
-		    }
-		  });
-		});
 	
 
 </script>
@@ -167,23 +103,14 @@ var _ = namespace('torotec.classBotonera');
 <body>
 
 
+<div id="botonera1"></div>
+<div id="contenido" style="width:400px; height:400px"></div>
+<div id="botonera2"></div>
 
-
-
-  <div id="page">
-  <!--
-    <div id="cabeza"></div>
-  -->
-    <div id="menu-contenedor">
-      <div id="menu">
-
-      </div>
-    </div>
-    <div id="contenido"></div>
-  </div>
 <script>
 	botonera.creaBotonera();
 
 </script>
+
 </body>
 </html>
